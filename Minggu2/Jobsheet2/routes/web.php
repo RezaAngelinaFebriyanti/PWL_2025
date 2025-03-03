@@ -3,6 +3,32 @@
 use Illuminate\Support\Facades\Route; //Mengimpor class Route
 use App\Http\Controllers\ItemController; //Tambahan: Mengimpor class ItemController
 
+//BASIC ROUTING
+//Route /hello
+Route::get('/hello', function() {
+    return 'Hello World';
+});
+
+//Route /world
+Route::get('/world', function () {
+    return 'World';
+});
+
+//Route /
+/*
+Route::get('/', function () {
+    return 'Selamat Datang';
+});
+*/
+//URL diganti SelamatDatang
+Route::get('/SelamatDatang', function () {
+    return 'Selamat Datang';
+});
+
+//Route /about
+Route::get('/about', function () {
+    return 'NIM: 2341760015 <br> Nama: Reza Angelina Febriyanti';
+});
 /*
 |--------------------------------------------------------------------------
 | Web Routes
