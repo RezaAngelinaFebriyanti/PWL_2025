@@ -46,6 +46,16 @@ Route::get('/article/{id}', function ($postId) {
     return 'Halaman Artikel dengan ID '.$postId;
 });
 
+//OPTIONAL PARAMETERS
+//Route /user
+Route::get('/user/{name?}', function ($name=null) {
+    return 'Nama saya '.$name;
+});
+
+//Ubah route /user
+Route::get('/user/{name?}', function ($name='John') {
+    return 'Nama saya '.$name;
+});
 
 /*
 |--------------------------------------------------------------------------
