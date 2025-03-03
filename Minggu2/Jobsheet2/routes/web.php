@@ -29,6 +29,24 @@ Route::get('/SelamatDatang', function () {
 Route::get('/about', function () {
     return 'NIM: 2341760015 <br> Nama: Reza Angelina Febriyanti';
 });
+
+//ROUTE PARAMETERS
+//Route /user/{name}
+Route::get('/user/{name}', function ($name) {
+    return 'Nama saya '.$name;
+});
+
+//Route /posts/{post}/comments/{comment}
+Route::get('/posts/{post}/comments/{comment}', function ($postId, $commentId) {
+    return 'Pos ke-'.$postId." Komentar ke-: ".$commentId;
+});
+
+//Route /articles/{id}
+Route::get('/article/{id}', function ($postId) {
+    return 'Halaman Artikel dengan ID '.$postId;
+});
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
