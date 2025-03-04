@@ -7,6 +7,16 @@ use App\Http\Controllers\WelcomeController; //Mengimpor class WelcomeController
 use App\Http\Controllers\HomeController; ///Mengimpor class HomeController
 use App\Http\Controllers\AboutController; //Mengimpor class AboutController
 use App\Http\Controllers\ArticleController; //Mengimpor class ArticleController
+use App\Http\Controllers\PhotoController; //Mengimpor class PhotoController
+
+//RESORCE CONTROLLER
+//Route untuk terhubung ke frontend
+Route::resource('photos', PhotoController::class);
+//Route untuk menjalankan fungsi pada file PhotoController
+Route::resource('photos', PhotoController::class)->only([ 'index', 'show'
+]);
+Route::resource('photos', PhotoController::class)->except([ 'create', 'store', 'update', 'destroy'
+]);
 
 //Membuat Controller
 Route::get('/hello', [WelcomeController::class,'hello']);
