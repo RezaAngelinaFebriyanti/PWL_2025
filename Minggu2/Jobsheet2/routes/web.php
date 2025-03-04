@@ -11,10 +11,23 @@ use App\Http\Controllers\PhotoController; //Mengimpor class PhotoController
 use App\resource\views\helloblade; //Mengimpor class hello.blade
 
 //VIEW
-//Route greeting
+//View dalam direktori 
+/*
 Route::get('/greeting', function() {
     return view('hello', ['name' => 'Reza Angelina']);
 });
+
+*/
+//Route greeting dengan view blog.hello
+/*
+Route::get('/greeting', function() {
+    return view('blog.hello', ['name' => 'Reza Angelina']);
+});
+*/
+
+//View dari Controller
+//Route greeting diarahkan ke WelcomeController pada fungsi greeting
+Route::get('/greeting', [WelcomeController::class, 'greeting']);
 
 //RESORCE CONTROLLER
 //Route untuk terhubung ke frontend
