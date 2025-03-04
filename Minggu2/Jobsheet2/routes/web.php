@@ -8,6 +8,13 @@ use App\Http\Controllers\HomeController; ///Mengimpor class HomeController
 use App\Http\Controllers\AboutController; //Mengimpor class AboutController
 use App\Http\Controllers\ArticleController; //Mengimpor class ArticleController
 use App\Http\Controllers\PhotoController; //Mengimpor class PhotoController
+use App\resource\views\helloblade; //Mengimpor class hello.blade
+
+//VIEW
+//Route greeting
+Route::get('/greeting', function() {
+    return view('hello', ['name' => 'Reza Angelina']);
+});
 
 //RESORCE CONTROLLER
 //Route untuk terhubung ke frontend
