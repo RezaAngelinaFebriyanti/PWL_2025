@@ -1,7 +1,33 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomePage; //Mengimpor class HomePage
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\SalesController;
+
+//ROUTE VIEW 
+//Halaman Awal Web
+Route::get('/home', [HomeController::class, 'index']);
+
+//ROUTE PREFIX
+//Menampilkan produk
+Route::prefix('/category')->group(function () {
+    Route::get('/food-beverage', [ProductController::class, 'foodBeverage']);
+    Route::get('/beauty-health', [ProductController::class, 'beautyHealth']);
+    Route::get('/home-care', [ProductController::class, 'homeCare']);
+    Route::get('/baby-kid', [ProductController::class, 'babyKid']);
+});
+
+//ROUTE PARAMETER
+//Halaman User
+Route::get('/user/{id}/name/{name}', function($id, $name) {
+    return 'Id Pelanggan Anda: ' . $id . ' Nama Anda: ' . $name;
+});
+
+//ROUTE VIEW
+// Halaman Penjualan
+Route::get('/sales', [SalesController::class, 'index']);
 
 /*
 |--------------------------------------------------------------------------
