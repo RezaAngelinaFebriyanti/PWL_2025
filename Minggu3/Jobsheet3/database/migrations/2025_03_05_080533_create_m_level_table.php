@@ -17,6 +17,12 @@ return new class extends Migration
             $table->string('level_nama', 100);
             $table->timestamps();
         });
+        Schema::create('m_kategori', function (Blueprint $table) {
+            $table->id('kategori_id');
+            $table->string('kategori_kode', 10)->unique();
+            $table->string('kategori_nama', 100);
+            $table->timestamps();
+        });
     }
 
     /**
@@ -26,4 +32,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('m_level');
     }
+
 };
