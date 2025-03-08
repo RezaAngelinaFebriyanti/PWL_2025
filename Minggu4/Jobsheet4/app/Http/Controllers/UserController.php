@@ -10,8 +10,44 @@ class UserController extends Controller
 {
     public function index()
     {
+        $user = UserModel::firstOrNew (
+            [
+                'username' => 'manager23',
+                'nama' => 'Manager Tiga Tiga',
+                'password' => Hash::make('12345'),
+                'level_id' => 2
+            ],
+        );
+        $user->save(); //Menyimpan didatabase
+        /*
+        $user = UserModel::firstOrNew (
+            [
+                'username' => 'manager',
+                'nama' => 'Manager',
+            ],
+        );
+        */
+        /*
+        $user = UserModel::firstOrCreate(
+            [
+                'username' => 'manager22',
+                'nama' => 'Manager Dua Dua',
+                'password' => Hash::make('12345'),
+                'level_id' => 2
+            ],
+        );
+        */
+        /*
+        $user = UserModel::firstOrCreate(
+            [
+                'username' => 'manager',
+                'nama' => 'Manager',
+            ],
+        );
+        */
+
         //Menampilkan jumlah data bila level_id=2
-        $user = UserModel::where('level_id', 2)->count();
+        //$user = UserModel::where('level_id', 2)->count();
         //dd($user);
 
         //finOrFail & firstOrFail
@@ -77,7 +113,7 @@ class UserController extends Controller
         $user = UserModel::where('level_id', 1)->first();
         $user = UserModel::firstWhere('level_id', 1);
         */
-        //return view('user', ['data' => $user]);
-        return view('user', ['jumlah' => $user]);
+        return view('user', ['data' => $user]);
+        //return view('user', ['jumlah' => $user]);
     }
 }
