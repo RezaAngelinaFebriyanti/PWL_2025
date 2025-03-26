@@ -42,9 +42,9 @@
         $('#myModal').modal('show')
     });
 
-    var dataLevel;
+    var dataKategori;
     $(document).ready(function() {
-        dataLevel = $('#table_kategori').DataTable({
+        dataKategori = $('#table_kategori').DataTable({
             serverSide: true,
             ajax: {
                 url: "{{ url('kategori/list') }}",
