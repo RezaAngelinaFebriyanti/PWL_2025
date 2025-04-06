@@ -64,6 +64,8 @@ Route::pattern('id', '[0-9]+');
 Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('login', [AuthController::class, 'postlogin']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+Route::get('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/register', [AuthController::class, 'postRegister']);
 
 Route::middleware(['auth'])->group(function() {
     Route::get('/', [WelcomeController::class, 'index']);
@@ -87,7 +89,7 @@ Route::middleware(['auth'])->group(function() {
         Route::delete('/{id}', [UserController::class, 'destroy']); // menghapus data user
     });
 
-    Route::middleware(['authorize:ADM'])->group(function (){
+    Route::middleware(['authorize:ADM,MNG'])->group(function (){
         Route::get('/', [LevelController::class, 'index']); // menampilkan halaman awal user
         Route::post('/list', [LevelController::class, 'list']); // menampilkan data user dalam bentuk json untuk datatables
         Route::get('/create', [LevelController::class, 'create']); // menampilkan halaman form tambah user
