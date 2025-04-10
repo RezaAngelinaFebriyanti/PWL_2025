@@ -5,7 +5,7 @@
     <div class="card-header">
         <h3 class="card-title">Daftar Barang</h3>
         <div class="card-tools">
-            <button onclick="modalAction('{{ url('/barang/import') }}')" class="btn btn-info">Import Barang</button>
+            <button onclick="modalAction('{{ url('/barang/import') }}')" class="btn btn-info">Import </button>
             <a href="{{ url('/barang/create') }}" class="btn btn-primary">Tambah Data</a>
             <button onclick="modalAction('{{ url('/barang/create_ajax') }}')" class="btn btn-success">Tambah Data (Ajax)</button>
         </div>
@@ -60,7 +60,8 @@
 </div>
 
 {{-- Modal --}}
-<div id="myModal" class="modal fade animate shake" tabindex="-1" data-backdrop="static" data-keyboard="false" data-width="75%"></div>
+<div id="myModal" class="modal fade animate shake" tabindex="-1" data-backdrop="static" data-keyboard="false" data-width="75%">
+</div>
 @endsection
 
 @push('js')
