@@ -317,6 +317,57 @@ class LevelController extends Controller
         }
         return redirect('/');
     }
+
+    public function export_excel()
+    {
+    // Ambil data level dari database
+    $level = LevelModel::select('level_kode', 'level_nama')
+        ->orderBy('level_id')
+        ->get();
+
+    // Buat instance Spreadsheet
+    $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
+    $sheet = $spreadsheet->getActiveSheet();
+
+    // Set header kolom
+    $sheet->setCellValue('A1', 'No');
+    $sheet->setCellValue('B1', 'Kode Level');
+    $sheet->setCellValue('C1', 'Nama Level');
+
+    $sheet->getStyle('A1:C1')->getFont()->setBold(true); // header bold
+
+    // Isi data
+    $no = 1;
+    $baris = 2;
+    foreach ($level as $data) {
+        $sheet->setCellValue('A' . $baris, $no++);
+        $sheet->setCellValue('B' . $baris, $data->level_kode);
+        $sheet->setCellValue('C' . $baris, $data->level_nama);
+        $baris++;
+    }
+
+    // Auto size kolom
+    foreach (range('A', 'C') as $kolom) {
+        $sheet->getColumnDimension($kolom)->setAutoSize(true);
+    }
+
+    $sheet->setTitle('Data Level');
+
+    // Simpan file dan kirim ke output
+    $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+    $filename = 'Data_Level_' . date('Y-m-d_H-i-s') . '.xlsx';
+
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Content-Disposition: attachment;filename="' . $filename . '"');
+    header('Cache-Control: max-age=0');
+    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+    header('Cache-Control: cache, must-revalidate');
+    header('Pragma: public');
+
+    $writer->save('php://output');
+    exit;
+    }
     /*
     public function index() {
         //DB::insert('insert into m_level(level_kode, level_name, created_at) values(?,?,?)', ['CUS', 'Pelanggan', now()]);
