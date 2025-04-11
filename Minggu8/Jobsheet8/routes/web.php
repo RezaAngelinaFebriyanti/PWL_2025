@@ -152,6 +152,7 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/import', [BarangController::class, 'import']); // ajax form upload excel
         Route::post('/import_ajax', [BarangController::class, 'import_ajax']); // ajax import excel
         Route::get('/export_excel', [BarangController::class, 'export_excel']); // ajax form upload excel
+        Route::get('/export_pdf', [BarangController::class, 'export_pdf']); // ajax form upload pdf
 
         Route::get('/{id}/edit_ajax', [BarangController::class, 'edit_ajax']); // Menampilkan halaman form edit barang Ajax
         Route::put('/{id}/update_ajax', [BarangController::class, 'update_ajax']); // Menyimpan perubahan data barang Ajax
