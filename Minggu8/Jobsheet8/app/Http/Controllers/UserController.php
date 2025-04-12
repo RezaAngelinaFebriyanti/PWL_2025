@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\LevelModel;
 use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class UserController extends Controller
 {
@@ -460,5 +461,22 @@ class UserController extends Controller
 
         $writer->save('php://output');
         exit;
+    }
+
+    public function export_pdf()
+    {
+        $user = UserModel::select('user_id', 'level_id', 'username', 'nama', 'created_at', 'updated_at')
+            ->orderBy('level_id')
+            ->orderBy('user_id')
+            ->with('level') // Jika relasi level digunakan
+            ->get();
+
+        // use Barryvdh\DomPDF\Facade\Pdf;
+        $pdf = Pdf::loadView('user.export_pdf', ['user' => $user]);
+        $pdf->setPaper('a4', 'portrait'); // set ukuran kertas dan orientasi
+        $pdf->setOption("isRemoteEnabled", true); // aktifkan jika ada gambar dari URL
+        $pdf->render();
+
+        return $pdf->stream('Data User ' . date('Y-m-d H:i:s') . '.pdf');
     }
 }
