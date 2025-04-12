@@ -105,7 +105,7 @@ Route::middleware(['auth'])->group(function() {
             Route::get('/import', [LevelController::class, 'import']); // ajax form upload excel
             Route::post('/import_ajax', [LevelController::class, 'import_ajax']); // ajax import excel
             Route::get('/export_excel', [LevelController::class, 'export_excel']); // ajax form upload excel
-            
+            Route::get('/export_pdf', [LevelController::class, 'export_pdf']); // ajax form upload pdf
             //Edit data level
             Route::get('/{id}/edit', [LevelController::class, 'edit']); // menampilkan halaman form edit user
             Route::put('/{id}', [LevelController::class, 'update']); // menyimpan perubahan data user
