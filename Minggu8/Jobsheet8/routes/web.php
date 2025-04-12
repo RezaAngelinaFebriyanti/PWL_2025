@@ -81,6 +81,7 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/import', [UserController::class, 'import']); // ajax form upload excel
         Route::post('/import_ajax', [UserController::class, 'import_ajax']); // ajax import excel
         Route::get('/export_excel', [UserController::class, 'export_excel']); // ajax form upload excel
+        Route::get('/export_pdf', [UserController::class, 'export_pdf']); // ajax form upload pdf
         
         Route::get('/{id}/edit', [UserController::class, 'edit']); // menampilkan halaman form edit user
         Route::put('/{id}', [UserController::class, 'update']); // menyimpan perubahan data user
@@ -129,6 +130,7 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/import', [KategoriController::class, 'import']); // ajax form upload excel
         Route::post('/import_ajax', [KategoriController::class, 'import_ajax']); // ajax import excel
         Route::get('/export_excel', [KategoriController::class, 'export_excel']); // ajax form upload excel
+        Route::get('/export_pdf', [KategoriController::class, 'export_pdf']); // ajax form upload pdf
 
         Route::get('/{id}/edit', [KategoriController::class, 'edit']); // menampilkan halaman form edit kategori
         Route::put('/{id}', [KategoriController::class, 'update']); // menyimpan perubahan data kategori
