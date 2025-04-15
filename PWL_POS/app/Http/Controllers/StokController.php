@@ -175,4 +175,62 @@ class StokController extends Controller
         }
         return redirect('/');
     }
+
+    public function export_excel()
+    {
+        // Ambil data stok lengkap dengan relasi barang dan user
+        $stok = StokModel::with(['barang', 'user'])->orderBy('stok_id')->get();
+
+        // Buat spreadsheet baru
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet;
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Set judul kolom
+        $sheet->setCellValue('A1', 'No');
+        $sheet->setCellValue('B1', 'Kode Barang');
+        $sheet->setCellValue('C1', 'Nama Barang');
+        $sheet->setCellValue('D1', 'Jumlah');
+        $sheet->setCellValue('E1', 'Nama User');
+        $sheet->setCellValue('F1', 'Tanggal Input');
+
+        $sheet->getStyle('A1:F1')->getFont()->setBold(true);
+
+        // Isi data
+        $no = 1;
+        $baris = 2;
+        foreach ($stok as $s) {
+            $sheet->setCellValue('A' . $baris, $no);
+            $sheet->setCellValue('B' . $baris, $s->barang->barang_kode ?? '-');
+            $sheet->setCellValue('C' . $baris, $s->barang->barang_nama ?? '-');
+            $sheet->setCellValue('D' . $baris, $s->jumlah);
+            $sheet->setCellValue('E' . $baris, $s->user->nama ?? '-');
+            $sheet->setCellValue('F' . $baris, $s->created_at ? $s->created_at->format('Y-m-d H:i:s') : '-');
+
+            $baris++;
+            $no++;
+        }
+
+        // Set kolom agar auto resize
+        foreach (range('A', 'F') as $columnID) {
+            $sheet->getColumnDimension($columnID)->setAutoSize(true);
+        }
+
+        $sheet->setTitle('Data Stok');
+
+        // Generate dan download file
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $filename = 'Data_Stok_' . date('Y-m-d_H-i-s') . '.xlsx';
+
+        // Set header untuk download
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        header('Cache-Control: cache, must-revalidate');
+        header('Pragma: public');
+
+        $writer->save('php://output');
+        exit;
+    }
 }
