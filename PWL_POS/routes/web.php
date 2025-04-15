@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\StokController;
 
 /*
 |--------------------------------------------------------------------------
@@ -192,5 +193,13 @@ Route::middleware(['auth'])->group(function() {
         Route::delete('/{id}', [SupplierController::class, 'destroy']); // menghapus data supplier
         
         Route::get('/{id}/show_ajax', [SupplierController::class, 'show']); // menampilkan detail supplier
+    });
+
+    Route::group(['prefix' => 'stok'], function () {
+        Route::get('/', [StokController::class, 'index']); // menampilkan halaman awal stok
+        Route::post('/list', [StokController::class, 'list']); // menampilkan data stok dalam bentuk json untuk datatables
+        Route::get('/create_ajax', [StokController::class, 'create_ajax']); // Menampilkan halaman form tambah stok Ajax
+        Route::post('/ajax', [StokController::class, 'store_ajax']); // Menyimpan data stok baru Ajax
+        Route::get('/{id}/show_ajax', [StokController::class, 'show']); // menampilkan detail stok
     });
 });
