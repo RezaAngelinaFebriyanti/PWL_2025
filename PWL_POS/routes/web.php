@@ -203,6 +203,7 @@ Route::middleware(['auth'])->group(function() {
         Route::post('/ajax', [StokController::class, 'store_ajax']); // Menyimpan data stok baru Ajax
         Route::get('/import', [StokController::class, 'import']); // ajax form upload excel
         Route::post('/import_ajax', [StokController::class, 'import_ajax']); // ajax import excel
+        Route::get('/export_excel', [StokController::class, 'export_excel']); // ajax form upload excel
         Route::get('/{id}/show_ajax', [StokController::class, 'show']); // menampilkan detail stok
     });  
 });
