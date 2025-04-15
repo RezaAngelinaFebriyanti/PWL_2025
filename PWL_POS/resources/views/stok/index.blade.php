@@ -10,6 +10,10 @@
                 <i class="fa fa-file-excel"></i>
                 Export Stok (.xlsx)
             </a>
+            <a href="{{ url('/stok/export_pdf') }}" class="btn btn-warning">
+                <i class="fa fa-file-excel"></i>
+                Export Stok (.pdf)
+            </a>
         <button onclick="modalAction('{{ url('/stok/create_ajax') }}')" class="btn btn-success">Tambah Stok</button>
         </div>
     </div>
