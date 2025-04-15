@@ -10,6 +10,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StokController;
+use App\Http\Controllers\PenjualanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -200,6 +201,8 @@ Route::middleware(['auth'])->group(function() {
         Route::post('/list', [StokController::class, 'list']); // menampilkan data stok dalam bentuk json untuk datatables
         Route::get('/create_ajax', [StokController::class, 'create_ajax']); // Menampilkan halaman form tambah stok Ajax
         Route::post('/ajax', [StokController::class, 'store_ajax']); // Menyimpan data stok baru Ajax
+        Route::get('/import', [StokController::class, 'import']); // ajax form upload excel
+        Route::post('/import_ajax', [StokController::class, 'import_ajax']); // ajax import excel
         Route::get('/{id}/show_ajax', [StokController::class, 'show']); // menampilkan detail stok
-    });
+    });  
 });
