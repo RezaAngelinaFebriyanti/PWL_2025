@@ -233,4 +233,17 @@ class StokController extends Controller
         $writer->save('php://output');
         exit;
     }
+
+    public function export_pdf()
+    {
+        $stok = StokModel::with(['barang', 'user'])->orderBy('stok_id')->get();
+
+        // Gunakan view khusus stok (stok/export_pdf.blade.php)
+        $pdf = Pdf::loadView('stok.export_pdf', ['stok' => $stok]);
+        $pdf->setPaper('a4', 'landscape'); // karena tabel lebih lebar
+        $pdf->setOption("isRemoteEnabled", true);
+        $pdf->render();
+
+        return $pdf->stream('Data Stok ' . date('Y-m-d H:i:s') . '.pdf');
+    }
 }
