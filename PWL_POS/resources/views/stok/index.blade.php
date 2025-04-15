@@ -5,10 +5,31 @@
     <div class="card-header">
         <h3 class="card-title">Daftar Stok Barang</h3>
         <div class="card-tools">
-                <button onclick="modalAction('{{ url('/stok/create_ajax') }}')" class="btn btn-success">Tambah Stok</button>
+        <button onclick="modalAction('{{ url('/stok/import') }}')" class="btn btn-info">Import Stok</button>
+        <button onclick="modalAction('{{ url('/stok/create_ajax') }}')" class="btn btn-success">Tambah Stok</button>
         </div>
     </div>
 
+    <div class="card-bord">
+        {{-- Filter --}}
+        <div id="filter" class="form-horizontal filter-date p-2 border-bottom mb-2">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group form-group-sm row text-sm mb-0">
+                        <label for="filter_date" class="col-md-1 col-form-label">Filter</label>
+                        <div class="col-md-3">
+                            <select name="filter_stok" class="form-control form-control-sm filter_stok">
+                                <option value="">- Semua -</option>
+                                @foreach($barang as $l)
+                                    <option value="{{ $l->barang_id }}">{{ $l->barang_nama }}</option>
+                                @endforeach
+                            </select>
+                            <small class="form-text text-muted">Stok Barang</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
@@ -53,17 +74,54 @@
                 url: "{{ url('stok/list') }}",
                 type: "POST",
                 data: function (d) {
-                    d.barang_id = $('.filter_barang').val();
+                    d.barang_id = $('.filter_stok').val();
                 }
             },
             columns: [
-                { data: 'DT_RowIndex', className: 'text-center', width: '5%', orderable: false, searchable: false },
-                { data: 'barang_id', width: '15%' },
-                { data: 'barang_nama', width: '15%' },
-                { data: 'jumlah', className: 'text-center', width: '10%' },
-                { data: 'user_nama', width: '20%' },
-                { data: 'aksi', className: 'text-center', width: '15%', orderable: false, searchable: false }
+                { 
+                    data: 'DT_RowIndex',
+                    className: 'text-center',
+                    width: '5%',
+                    orderable: false,
+                    searchable: false
+                },
+                { 
+                    data: 'barang_id',
+                    className: '',
+                    width: '15%',
+                    orderable: true,
+                    searchable: true
+                },
+                { 
+                    data: 'barang_nama',
+                    className: '',
+                    width: '15%',
+                    orderable: true,
+                    searchable: true
+                },
+                { 
+                    data: 'jumlah',
+                    className: 'text-center',
+                    width: '10%',
+                    orderable: true,
+                    searchable: true
+                },
+                { 
+                    data: 'user_nama', 
+                    className: '',
+                    width: '20%',
+                    orderable: true,
+                    searchable: true 
+                },
+                { 
+                    data: 'aksi', 
+                    className: 'text-center', 
+                    width: '15%', 
+                    orderable: false, 
+                    searchable: false 
+                }
             ]
+
         });
 
         $('#table-stok_filter input').unbind().bind().on('keyup', function(e) {
@@ -72,7 +130,7 @@
             }
         });
 
-        $('.filter_barang').change(function() {
+        $('.filter_stok').change(function() {
             tableStok.draw();
         });
     });
