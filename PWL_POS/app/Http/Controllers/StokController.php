@@ -1,0 +1,115 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Validator;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
+use App\Models\BarangModel;
+use App\Models\UserModel;
+use App\Models\StokModel;
+
+class StokController extends Controller
+{
+    public function index()
+    {
+        $breadcrumb = (object) [
+            'title' => 'Data Stok Barang',
+            'list'  => ['Home', 'Stok']
+        ];
+
+        $page = (object) [
+            'title' => 'Daftar stok barang yang tercatat'
+        ];
+
+        $activeMenu = 'stok'; // set menu aktif ke stok
+
+        $stok = StokModel::with(['barang', 'user'])->get(); // ambil data stok dengan relasi barang & user
+        $barang = BarangModel::all();
+
+        return view('stok.index', [
+            'breadcrumb' => $breadcrumb,
+            'page' => $page,
+            'stok' => $stok,
+            'barang' => $barang,
+            'activeMenu' => $activeMenu
+        ]);
+    }
+
+    public function list(Request $request)
+    {
+        $stok = StokModel::with(['barang', 'user']);
+
+        // Filter jika ada barang_id dari request
+        if ($request->barang_id) {
+            $stok->where('barang_id', $request->barang_id);
+        }
+
+        return DataTables::of($stok)
+            ->addIndexColumn()
+            ->addColumn('barang_kode', function ($s) {
+                return $s->barang->barang_kode ?? '-';
+            })
+            ->addColumn('barang_nama', function ($s) {
+                return $s->barang->barang_nama ?? '-';
+            })
+            ->addColumn('user_nama', function ($s) {
+                return $s->user->nama ?? '-';
+            })
+            ->addColumn('aksi', function ($s) {
+                $btn = '<button onclick="modalAction(\'' . url('/stok/' . $s->stok_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/stok/' . $s->stok_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
+                $btn .= '<button onclick="modalAction(\'' . url('/stok/' . $s->stok_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
+                return $btn;
+            })
+            ->rawColumns(['aksi'])
+            ->make(true);
+    }
+    
+    public function create_ajax()
+    {
+            $barang = BarangModel::select('barang_id', 'barang_nama')->get();
+            $user = UserModel::select('user_id', 'nama')->get();
+
+            return view('stok.create_ajax', [
+                'barang' => $barang,
+                'user' => $user
+            ]);
+        }
+
+    public function store_ajax(Request $request){
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'barang_id' => 'required|integer|exists:m_barang,barang_id',
+                'user_id' => 'required|integer|exists:m_user,user_id',
+                'jumlah' => 'required|integer|min:1'
+            ];
+    
+        $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validasi Gagal',
+                    'msgField' => $validator->errors(),
+                ]);
+            }
+    
+        $existingStok = StokModel::where('barang_id', $request->barang_id)->first();
+            if ($existingStok) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data stok untuk barang ini sudah ada. Silakan edit data yang tersedia.',
+                ]);
+            }
+    
+            StokModel::create($request->all());
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data stok berhasil disimpan',
+                ]);
+            }
+            return redirect('/');
+    } 
+}
