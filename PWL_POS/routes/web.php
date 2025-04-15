@@ -205,6 +205,11 @@ Route::middleware(['auth'])->group(function() {
         Route::post('/import_ajax', [StokController::class, 'import_ajax']); // ajax import excel
         Route::get('/export_excel', [StokController::class, 'export_excel']); // ajax form upload excel
         Route::get('/export_pdf', [StokController::class, 'export_pdf']); // ajax form upload pdf
-        Route::get('/{id}/show_ajax', [StokController::class, 'show']); // menampilkan detail stok
-    });  
+        Route::get('/{id}', [StokController::class, 'show']); // menampilkan detail stok
+    });
+
+    Route::group(['prefix' => 'penjualan'], function () {
+        Route::get('/', [PenjualanController::class, 'index']); // menampilkan halaman awal stok
+        Route::post('/list', [PenjualanController::class, 'list']); // menampilkan data stok dalam bentuk json untuk datatables
+    });
 });
