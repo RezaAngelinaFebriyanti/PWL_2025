@@ -218,7 +218,7 @@ class StokController extends Controller
         $sheet->setTitle('Data Stok');
 
         // Generate dan download file
-        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         $filename = 'Data_Stok_' . date('Y-m-d_H-i-s') . '.xlsx';
 
         // Set header untuk download
@@ -245,5 +245,87 @@ class StokController extends Controller
         $pdf->render();
 
         return $pdf->stream('Data Stok ' . date('Y-m-d H:i:s') . '.pdf');
+    }
+
+    public function show($id)
+    {
+        $stok = StokModel::with(['barang', 'user'])->findOrFail($id);
+
+        return view('stok.show', [
+            'page' => [
+                'title' => 'Detail Stok Barang',
+                'breadcrumbs' => [
+                    ['label' => 'Stok', 'url' => route('stok.index')],
+                    ['label' => 'Detail', 'active' => true],
+                ],
+            ],
+            'stok' => $stok,
+            'activeMenu' => 'stok',
+        ]);
+    }
+
+    public function show_ajax(string $id)
+    {
+        $stok = StokModel::with(['barang', 'user'])->find($id);
+        return view('stok.show_ajax', ['stok' => $stok]);
+    }
+
+    public function edit_ajax(string $id)
+    {
+        $stok = StokModel::find($id);
+        $barang = BarangModel::all();
+        $user = UserModel::all();
+
+        return view('stok.edit_ajax', [
+            'stok' => $stok,
+            'barang' => $barang,
+            'user' => $user
+        ]);
+    }
+
+    public function update_ajax(Request $request, string $id)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'barang_id' => 'required|integer|exists:m_barang,barang_id',
+                'user_id' => 'required|integer|exists:m_user,user_id',
+                'jumlah' => 'required|integer|min:1',
+            ];
+
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validasi Gagal',
+                    'msgField' => $validator->errors(),
+                ]);
+            }
+
+            $existingStok = StokModel::where('barang_id', $request->barang_id)
+                ->where('stok_id', '!=', $id)
+                ->first();
+
+            if ($existingStok) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data stok untuk barang ini sudah ada. Silakan edit data yang sudah ada.',
+                ]);
+            }
+
+            $stok = StokModel::find($id);
+            if ($stok) {
+                $stok->update($request->all());
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data stok berhasil diubah',
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data stok tidak ditemukan',
+                ]);
+            }
+        }
+        return redirect('/');
     }
 }
