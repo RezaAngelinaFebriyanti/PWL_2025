@@ -17,6 +17,7 @@ use App\Models\BarangModel;
 use App\Models\StokModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use App\Models\SupllierModel;
+use Barryvdh\DomPDF\Facade\PDF;
 
 class PenjualanController extends Controller
 {
@@ -479,5 +480,31 @@ class PenjualanController extends Controller
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save('php://output');
         exit;
+    }
+
+    public function export_pdf()
+    {
+        // Ambil data penjualan beserta relasi user dan details
+        $penjualans = PenjualanModel::with('user', 'details')
+            ->select('penjualan_id', 'penjualan_kode', 'pembeli', 'user_id', 'penjualan_tanggal')
+            ->orderBy('penjualan_id')
+            ->get();
+
+        // Hitung total penjualan dari semua transaksi
+        $totalPenjualan = $penjualans->sum(function ($penjualan) {
+            return $penjualan->details->sum('subtotal');
+        });
+
+        // Load view untuk PDF, kirim data penjualans dan totalPenjualan
+        $pdf = Pdf::loadView('penjualan.export_pdf', [
+            'penjualans' => $penjualans,
+            'totalPenjualan' => $totalPenjualan
+        ]);
+        $pdf->setPaper('a4', 'portrait');
+        $pdf->setOption("isRemoteEnabled", true);
+        $pdf->render();
+
+        // Stream PDF
+        return $pdf->stream('Data Penjualan ' . date('Y-m-d H:i:s') . '.pdf');
     }
 }

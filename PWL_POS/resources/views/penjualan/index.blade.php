@@ -10,6 +10,10 @@
                 <i class="fa fa-file-excel"></i>
                 Export Penjualan (.xlsx)
             </a>
+            <a href="{{ url('/penjualan/export_pdf') }}" class="btn btn-warning">
+                <i class="fa fa-file-excel"></i>
+                Export Penjualan (.pdf)
+            </a>
             <button onclick="modalAction(`{{ url('/penjualan/create_ajax') }}`)" class="btn btn-success">Tambah Data (Ajax)</button>
             </div>
         </div>

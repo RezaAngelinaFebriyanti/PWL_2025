@@ -220,6 +220,7 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/import', [PenjualanController::class, 'import']); // ajax form upload excel
         Route::post('/import_ajax', [PenjualanController::class, 'import_ajax']); // ajax import excel
         Route::get('/export_excel', [PenjualanController::class, 'export_excel']); // ajax form upload excel
+        Route::get('/export_pdf', [PenjualanController::class, 'export_pdf']); // ajax form upload pdf
         Route::get('/{id}/edit_ajax', [PenjualanController::class, 'edit_ajax']); // Menampilkan halaman form edit stok Ajax
         Route::put('/{id}/update_ajax', [PenjualanController::class, 'update_ajax']); // Menyimpan perubahan data stok Ajax
         Route::get('/{id}/show_ajax', [PenjualanController::class, 'show_ajax']); // menampilkan detail stok 
