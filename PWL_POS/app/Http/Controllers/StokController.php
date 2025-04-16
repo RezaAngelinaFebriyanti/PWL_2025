@@ -328,4 +328,30 @@ class StokController extends Controller
         }
         return redirect('/');
     }
+
+    public function delete_ajax(Request $request, string $id)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $stok = StokModel::find($id);
+            if ($stok) {
+                $stok->delete();
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data stok berhasil dihapus',
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data stok tidak ditemukan',
+                ]);
+            }
+        }
+        return redirect('/');
+    }
+
+    public function confirm_ajax(string $id)
+    {
+        $stok = StokModel::with(['barang', 'user'])->find($id);
+        return view('stok.confirm_ajax', ['stok' => $stok]);
+    }
 }
