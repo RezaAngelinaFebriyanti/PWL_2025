@@ -1,3 +1,4 @@
+
 @empty($stok)
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -17,7 +18,7 @@
         </div>
     </div>
 @else
-    <form action="{{ url('/stok/' . $stokr->stok_id.'/delete_ajax') }}" method="POST" id="form-delete">
+    <form action="{{ url('/stok/' . $stok->stok_id . '/delete_ajax') }}" method="POST" id="form-delete">
         @csrf
         @method('DELETE')
         <div id="modal-master" class="modal-dialog modal-lg" role="document">
@@ -36,15 +37,19 @@
                     <table class="table table-sm table-bordered table-striped">
                         <tr>
                             <th class="text-right col-3">ID Barang :</th>
-                            <td class="col-9">{{ $stok->barang->barang_id }}</td>
+                            <td class="col-9">{{ $stok->barang ? $stok->barang->barang_id : 'Tidak ditemukan' }}</td>
                         </tr>
                         <tr>
-                            <th class="text-right col-3">ID User :</th>
-                            <td class="col-9">{{ $stok->user->user_id }}</td>
+                            <th class="text-right col-3">Nama Barang :</th>
+                            <td class="col-9">{{ $stok->barang ? $stok->barang->barang_nama : 'Tidak ditemukan' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-right col-3">User :</th>
+                            <td class="col-9">{{ $stok->user ? $stok->user->nama : 'Tidak ditemukan' }}</td>
                         </tr>
                         <tr>
                             <th class="text-right col-3">Jumlah :</th>
-                            <td class="col-9">{{ $stok->jumlah }}</td>
+                            <td class="col-9">{{ $stok->jumlah ?? '0' }}</td>
                         </tr>
                     </table>
                 </div>
@@ -55,6 +60,7 @@
             </div>
         </div>
     </form>
+
     <script>
         $(document).ready(function() {
             $("#form-delete").validate({
@@ -72,7 +78,7 @@
                                     title: 'Berhasil',
                                     text: response.message
                                 });
-                                dataUser.ajax.reload();
+                                tableStok.ajax.reload(); // Ubah dataUser menjadi dataStok sesuai dengan DataTable stok
                             } else {
                                 $('.error-text').text('');
                                 $.each(response.msgField, function(prefix, val) {
@@ -84,6 +90,13 @@
                                     text: response.message
                                 });
                             }
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Terjadi Kesalahan',
+                                text: 'Terjadi kesalahan pada server: ' + xhr.status + ' ' + xhr.statusText
+                            });
                         }
                     });
                     return false;
@@ -93,10 +106,10 @@
                     error.addClass('invalid-feedback');
                     element.closest('.form-group').append(error);
                 },
-                highlight: function(element) {
+                highlight: function(element, errorClass, validClass) {
                     $(element).addClass('is-invalid');
                 },
-                unhighlight: function(element) {
+                unhighlight: function(element, errorClass, validClass) {
                     $(element).removeClass('is-invalid');
                 }
             });
