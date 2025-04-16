@@ -223,11 +223,11 @@ class BarangController extends Controller
     public function edit_ajax(string $id)
     {
         $barang = BarangModel::find($id);
-        $level = LevelModel::select('level_id', 'level_nama')->get();
+        $kategori = KategoriModel::select('kategori_id', 'kategori_nama')->get();
 
-        return view('barang.edit_ajax', ['barang' => $barang, 'level' => $level]);
+        return view('barang.edit_ajax', ['barang' => $barang, 'kategori' => $kategori]);
     }
-
+    
     public function update_ajax(Request $request, $id)
     {
         if ($request->ajax() || $request->wantsJson()) {
