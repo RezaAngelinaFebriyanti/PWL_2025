@@ -215,7 +215,10 @@ Route::middleware(['auth'])->group(function() {
     Route::group(['prefix' => 'penjualan'], function () {
         Route::get('/', [PenjualanController::class, 'index']); // menampilkan halaman awal stok
         Route::post('/list', [PenjualanController::class, 'list']); // menampilkan data stok dalam bentuk json untuk datatables
+        Route::get('/create_ajax', [PenjualanController::class, 'create_ajax'])->name('penjualan.create_ajax'); // Menampilkan halaman form tambah penjualan Ajax
+        Route::post('/ajax', [PenjualanController::class, 'store_ajax'])->name('penjualan.store_ajax'); // Menyimpan data penjualan baru Ajax
         Route::get('/import', [PenjualanController::class, 'import']); // ajax form upload excel
         Route::post('/import_ajax', [PenjualanController::class, 'import_ajax']); // ajax import excel
+        Route::get('/{id}/show_ajax', [PenjualanController::class, 'show_ajax']); // menampilkan detail stok 
     });
 });
