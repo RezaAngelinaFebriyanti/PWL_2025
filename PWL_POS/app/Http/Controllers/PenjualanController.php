@@ -15,6 +15,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use App\Models\BarangModel;
 use App\Models\StokModel;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use App\Models\SupllierModel;
 
 class PenjualanController extends Controller
 {
@@ -426,5 +428,56 @@ class PenjualanController extends Controller
             }
         }
         return redirect('/');
+    }
+
+    public function export_excel()
+    {
+        $penjualans = PenjualanModel::select('user_id', 'penjualan_kode', 'pembeli', 'penjualan_tanggal')
+            ->orderBy('penjualan_id')
+            ->with('user')
+            ->get();
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'No');
+        $sheet->setCellValue('B1', 'Kode Penjualan');
+        $sheet->setCellValue('C1', 'Pembeli');
+        $sheet->setCellValue('D1', 'Petugas/Kasir');
+        $sheet->setCellValue('E1', 'Tanggal');
+
+        $sheet->getStyle('A1:E1')->getFont()->setBold(true);
+
+        $no = 1;
+        $baris = 2;
+        foreach ($penjualans as $penjualan) {
+            $sheet->setCellValue('A' . $baris, $no);
+            $sheet->setCellValue('B' . $baris, $penjualan->penjualan_kode);
+            $sheet->setCellValue('C' . $baris, $penjualan->pembeli);
+            $sheet->setCellValue('D' . $baris, $penjualan->user->nama);
+            $sheet->setCellValue('E' . $baris, $penjualan->penjualan_tanggal);
+            $baris++;
+            $no++;
+        }
+
+        foreach (range('A', 'E') as $columnID) {
+            $sheet->getColumnDimension($columnID)->setAutoSize(true);
+        }
+
+        $sheet->setTitle('Data Penjualan');
+
+        $filename = 'Data_Penjualan_' . date('Y-m-d_H-i-s') . '.xlsx';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+        header('Cache-Control: cache, must-revalidate');
+        header('Pragma: public');
+
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
+        exit;
     }
 }
