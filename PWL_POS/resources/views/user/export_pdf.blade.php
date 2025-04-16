@@ -20,6 +20,12 @@
         .d-block {
             display: block;
         }
+        img.image {
+            width: auto;
+            height: 80px;
+            max-width: 150px;
+            max-height: 150px;
+        }
         .text-right {
             text-align: right;
         }
@@ -53,6 +59,7 @@
     <table class="border-bottom-header">
         <tr>
             <td width="15%" class="text-center">
+                <img src="{{ public_path('polinema-bw.png') }}" class="image">
             </td>
             <td width="85%">
                 <span class="text-center d-block font-11 font-bold mb-1">
