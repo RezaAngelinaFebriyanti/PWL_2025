@@ -207,6 +207,8 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/export_pdf', [StokController::class, 'export_pdf']); // ajax form upload pdf
         Route::get('/{id}/edit_ajax', [StokController::class, 'edit_ajax']); // Menampilkan halaman form edit stok Ajax
         Route::put('/{id}/update_ajax', [StokController::class, 'update_ajax']); // Menyimpan perubahan data stok Ajax
+        Route::get('/{id}/delete_ajax', [StokController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete stok Ajax
+        Route::delete('/{id}/delete_ajax', [StokController::class, 'delete_ajax']); // Untuk hapus data stok Ajax
         Route::get('/{id}/show_ajax', [StokController::class, 'show_ajax']); // menampilkan detail stok 
     });
 
