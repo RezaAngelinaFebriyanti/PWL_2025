@@ -20,6 +20,12 @@
         .d-block {
             display: block;
         }
+        img.image {
+            width: auto;
+            height: 80px;
+            max-width: 150px;
+            max-height: 150px;
+        }
         .text-right {
             text-align: right;
         }
@@ -35,6 +41,9 @@
         .font-11 {
             font-size: 11pt;
         }
+        .font-12 {
+            font-size: 12pt;
+        }
         .font-13 {
             font-size: 13pt;
         }
@@ -49,7 +58,9 @@
 <body>
     <table class="border-bottom-header">
         <tr>
-            <td width="15%" class="text-center"></td>
+            <td width="15%" class="text-center">
+                <img src="{{ public_path('polinema-bw.png') }}" class="image">
+            </td>
             <td width="85%">
                 <span class="text-center d-block font-11 font-bold mb-1">
                     KEMENTERIAN PENDIDIKAN, KEBUDAYAAN, RISET, DAN TEKNOLOGI
