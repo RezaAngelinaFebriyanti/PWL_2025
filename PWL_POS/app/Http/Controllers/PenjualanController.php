@@ -326,4 +326,105 @@ class PenjualanController extends Controller
         }
         return redirect('/');
     }
+
+    public function edit_ajax(string $id)
+    {
+        $penjualan = PenjualanModel::with('details')->find($id);
+        $user = UserModel::select('user_id', 'nama')->get();
+        $barangs = BarangModel::all();
+
+        if (!$penjualan) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data penjualan tidak ditemukan',
+            ]);
+        }
+
+        return view('penjualan.edit_ajax', ['penjualan' => $penjualan, 'user' => $user, 'barangs' => $barangs]);
+    }
+
+    public function update_ajax(Request $request, string $id)
+    {
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'penjualan_kode'    => 'required|string|min:3|unique:t_penjualan,penjualan_kode,' . $id . ',penjualan_id',
+                'user_id'           => 'required|integer|exists:m_user,user_id',
+                'pembeli'           => 'required|string|min:3',
+                'penjualan_tanggal' => 'required|date',
+                'barang_id'         => 'required|array',
+                'barang_id.*'       => 'required|integer|exists:m_barang,barang_id',
+                'jumlah'            => 'required|array',
+                'jumlah.*'          => 'required|integer|min:1',
+            ];
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Validasi Gagal',
+                    'msgField' => $validator->errors(),
+                ]);
+            }
+
+            try {
+                return DB::transaction(function () use ($request, $id) {
+                    $penjualan = PenjualanModel::find($id);
+                    if (!$penjualan) {
+                        return response()->json([
+                            'status' => false,
+                            'message' => 'Data penjualan tidak ditemukan',
+                        ]);
+                    }
+
+                    // Kembalikan stok sebelumnya
+                    $oldDetails = DetailPenjualanModel::where('penjualan_id', $id)->get();
+                    foreach ($oldDetails as $detail) {
+                        $stok = StokModel::where('barang_id', $detail->barang_id)->first();
+                        if ($stok) {
+                            $stok->jumlah += $detail->jumlah;
+                            $stok->save();
+                        }
+                    }
+
+                    // Hapus detail lama
+                    DetailPenjualanModel::where('penjualan_id', $id)->delete();
+
+                    // Update header
+                    $penjualan->update($request->all());
+
+                    // Simpan detail baru dan validasi stok
+                    foreach ($request->barang_id as $index => $barang_id) {
+                        $barang = BarangModel::find($barang_id);
+                        $stok = StokModel::where('barang_id', $barang_id)->first();
+
+                        if (!$stok || $stok->jumlah < $request->jumlah[$index]) {
+                            throw new \Exception("Stok barang {$barang->barang_nama} tidak cukup!");
+                        }
+
+                        $detail = new DetailPenjualanModel();
+                        $detail->penjualan_id = $penjualan->penjualan_id;
+                        $detail->barang_id = $barang_id;
+                        $detail->harga = $barang->harga_jual;
+                        $detail->jumlah = $request->jumlah[$index];
+                        $detail->save();
+
+                        $stok->jumlah -= $request->jumlah[$index];
+                        $stok->save();
+                    }
+
+                    return response()->json([
+                        'status' => true,
+                        'message' => 'Data penjualan berhasil diubah',
+                    ]);
+                });
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Gagal mengubah data: ' . $e->getMessage(),
+                ]);
+            }
+        }
+        return redirect('/');
+    }
 }

@@ -219,6 +219,8 @@ Route::middleware(['auth'])->group(function() {
         Route::post('/ajax', [PenjualanController::class, 'store_ajax'])->name('penjualan.store_ajax'); // Menyimpan data penjualan baru Ajax
         Route::get('/import', [PenjualanController::class, 'import']); // ajax form upload excel
         Route::post('/import_ajax', [PenjualanController::class, 'import_ajax']); // ajax import excel
+        Route::get('/{id}/edit_ajax', [PenjualanController::class, 'edit_ajax']); // Menampilkan halaman form edit stok Ajax
+        Route::put('/{id}/update_ajax', [PenjualanController::class, 'update_ajax']); // Menyimpan perubahan data stok Ajax
         Route::get('/{id}/show_ajax', [PenjualanController::class, 'show_ajax']); // menampilkan detail stok 
     });
 });
