@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\LevelController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\KategoriController;
+use App\Http\Controllers\Api\BarangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,3 +46,10 @@ Route::post('/kategoris', [KategoriController::class, 'store']);
 Route::get('/kategoris/{kategori}', [KategoriController::class, 'show']);
 Route::put('/kategoris/{kategori}', [KategoriController::class, 'update']);
 Route::delete('/kategoris/{kategori}', [KategoriController::class, 'destroy']);
+
+//Route API Barang
+Route::get('/barangs', [BarangController::class, 'index']);
+Route::post('/barangs', [BarangController::class, 'store']); 
+Route::get('/barangs/{barang}', [BarangController::class, 'show']);
+Route::put('/barangs/{barang}', [BarangController::class, 'update']);
+Route::delete('/barangs/{barang}', [BarangController::class, 'destroy']);
