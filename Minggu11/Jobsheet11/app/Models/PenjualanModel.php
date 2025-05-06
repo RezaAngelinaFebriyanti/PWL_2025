@@ -8,14 +8,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\UserModel;
 use App\Models\DetailPenjualanModel;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class PenjualanModel extends Model
 {
+    public function getJWTIdentifier(){
+        return $this->getKey();
+    }
+
     use HasFactory;
     protected $table = 't_penjualan';
     protected $primaryKey = 'penjualan_id';
 
-    protected $fillable = ['user_id', 'pembeli', 'penjualan_kode', 'penjualan_tanggal'];
+    protected $fillable = ['user_id', 'pembeli', 'penjualan_kode', 'penjualan_tanggal', 'image'];
 
     // Relasi tabel user
     public function user(): BelongsTo
@@ -41,4 +46,10 @@ class PenjualanModel extends Model
         return $this->details->sum('subtotal');
     }
     
+    public function image(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($image) => url('/storage/transaksi/' . $image),
+        );
+    }
 }
