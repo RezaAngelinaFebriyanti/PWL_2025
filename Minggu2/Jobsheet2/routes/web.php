@@ -27,6 +27,7 @@ Route::get('/about', function () {
 */
 
 // ROUTER PARAMETERS
+/*
 Route::get('/user/{name}', function ($name) {
     return 'Nama saya '.$name;
 });
@@ -37,4 +38,14 @@ Route::get('/posts/{post}/comments/{comment}', function ($postId, $commentId) {
 
 Route::get('/article/{id}', function ($postId) {
     return 'Halaman Artikel dengan ID '.$postId;
+});
+*/
+
+// OPTIONAL PARAMETERS
+Route::get('/user/{name?}', function ($name=null) {
+    return 'Nama saya '.$name;
+});
+
+Route::get('/user/{name?}', function ($name='John') {
+    return 'Nama saya '.$name;
 });
