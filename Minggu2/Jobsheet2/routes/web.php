@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route; //Mengimpor class Route
 use App\Http\Controllers\ItemController; //Tambahan: Mengimpor class ItemController
+use App\Http\Controllers\WelcomeController; //Mengimpor class WelcomeController
 
 //BASIC ROUTING
 /*
@@ -109,3 +110,6 @@ Route::prefix('admin')->group(function () {
 Route::view('/welcome', 'welcome');
 Route::view('/welcome', 'welcome', ['name' => 'Taylor']);
 */
+
+// CONTROLLER
+Route::get('/hello', [WelcomeController::class,'hello']);
