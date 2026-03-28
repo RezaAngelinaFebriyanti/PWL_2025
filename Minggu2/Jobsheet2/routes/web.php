@@ -68,6 +68,7 @@ return redirect()->route('profile');
 */
 
 // ROUTE GROUP dan ROUTE PREFIXES
+/*
 Route::middleware(['first', 'second'])->group(function () {
     Route::get('/', function () {
     // Uses first & second middleware...
@@ -89,3 +90,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/post', [PostController::class, 'index']);
     Route::get('/event', [EventController::class, 'index']);
 });
+*/
+
+// ROUTE PREFIXES
+/*
+Route::prefix('admin')->group(function () {
+    Route::get('/user', [UserController::class, 'index']);
+    Route::get('/post', [PostController::class, 'index']);
+    Route::get('/event', [EventController::class, 'index']);
+});
+*/
