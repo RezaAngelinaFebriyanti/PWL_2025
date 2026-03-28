@@ -102,4 +102,8 @@ Route::prefix('admin')->group(function () {
 */
 
 // REDIRECT ROUTES
-Route::redirect('/here', '/there');
+//Route::redirect('/here', '/there');
+
+// VIEW ROUTES
+Route::view('/welcome', 'welcome');
+Route::view('/welcome', 'welcome', ['name' => 'Taylor']);
