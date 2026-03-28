@@ -100,3 +100,6 @@ Route::prefix('admin')->group(function () {
     Route::get('/event', [EventController::class, 'index']);
 });
 */
+
+// REDIRECT ROUTES
+Route::redirect('/here', '/there');
