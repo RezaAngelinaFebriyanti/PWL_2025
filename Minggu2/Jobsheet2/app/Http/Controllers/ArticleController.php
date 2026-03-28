@@ -9,4 +9,5 @@ class ArticleController extends Controller
     public function article($id) {
         return 'Halaman Artikel dengan ID '.$id;
     }
+    
 }

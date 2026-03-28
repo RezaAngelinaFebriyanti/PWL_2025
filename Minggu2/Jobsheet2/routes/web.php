@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route; //Mengimpor class Route
 use App\Http\Controllers\ItemController; //Tambahan: Mengimpor class ItemController
 use App\Http\Controllers\WelcomeController; //Mengimpor class WelcomeController
 use App\Http\Controllers\PageController; //Mengimpor class PageController
+use App\Http\Controllers\HomeController; ///Mengimpor class HomeController
+use App\Http\Controllers\AboutController; //Mengimpor class AboutController
+use App\Http\Controllers\ArticleController; //Mengimpor class ArticleController
 
 //BASIC ROUTING
 /*
@@ -117,3 +120,7 @@ Route::get('/hello', [WelcomeController::class,'hello']);
 Route::get('/index', [PageController::class,'index']);
 Route::get('/about', [PageController::class,'about']);
 Route::get('/article/{id}', [PageController::class,'article']);
+
+Route::get('/index', [HomeController::class,'home']);
+Route::get('/about', [AboutController::class,'about']);
+Route::get('/article/{id}', [ArticleController::class,'article']);
