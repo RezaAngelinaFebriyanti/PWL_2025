@@ -5,7 +5,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
-                <button onclick="modalAction('{{ url('/supplier/import') }}')" class="btn btn-info">Import </button>
+                <button onclick="modalAction(`{{ url('/supplier/import') }}`)" class="btn btn-info">Import </button>
                 <a href="{{ url('/supplier/export_excel') }}" class="btn btn-primary">
                     <i class="fa fa-file-excel"></i>
                     Export Supplier (.xlsx)
@@ -14,7 +14,7 @@
                     <i class="fa fa-file-excel"></i>
                     Export Supplier (.pdf)
                 </a>
-                <button onclick="modalAction('{{ url('/supplier/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah Ajax</button>
+                <button onclick="modalAction(`{{ url('/supplier/create_ajax') }}`)" class="btn btn-sm btn-success mt-1">Tambah Ajax</button>
             </div>
         </div>
 

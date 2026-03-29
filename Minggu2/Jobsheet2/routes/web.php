@@ -7,6 +7,7 @@ use App\Http\Controllers\PageController; //Mengimpor class PageController
 use App\Http\Controllers\HomeController; ///Mengimpor class HomeController
 use App\Http\Controllers\AboutController; //Mengimpor class AboutController
 use App\Http\Controllers\ArticleController; //Mengimpor class ArticleController
+use App\Http\Controllers\PhotoController; //Mengimpor class PhotoController
 
 //BASIC ROUTING
 /*
@@ -116,6 +117,7 @@ Route::view('/welcome', 'welcome', ['name' => 'Taylor']);
 */
 
 // CONTROLLER
+/*
 Route::get('/hello', [WelcomeController::class,'hello']);
 Route::get('/index', [PageController::class,'index']);
 Route::get('/about', [PageController::class,'about']);
@@ -124,3 +126,10 @@ Route::get('/article/{id}', [PageController::class,'article']);
 Route::get('/index', [HomeController::class,'home']);
 Route::get('/about', [AboutController::class,'about']);
 Route::get('/article/{id}', [ArticleController::class,'article']);
+*/
+
+// RESOURCE CONTROLLER
+Route::resource('photos', PhotoController::class);
+//Route untuk menjalankan fungsi pada file PhotoController
+Route::resource('photos', PhotoController::class)->only([ 'index', 'show']);
+Route::resource('photos', PhotoController::class)->except([ 'create', 'store', 'update', 'destroy']);

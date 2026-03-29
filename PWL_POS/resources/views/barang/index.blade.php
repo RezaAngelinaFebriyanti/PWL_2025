@@ -5,16 +5,16 @@
     <div class="card-header">
         <h3 class="card-title">Daftar Barang</h3>
         <div class="card-tools">
-            <button onclick="modalAction('{{ url('/barang/import') }}')" class="btn btn-info">Import </button>
+            <button onclick="modalAction(`{{ url('/barang/import') }}`)" class="btn btn-info">Import </button>
             <a href="{{ url('/barang/export_excel') }}" class="btn btn-primary">
                 <i class="fa fa-file-excel"></i>
                 Export Barang (.xlsx)
             </a>
             <a href="{{ url('/barang/export_pdf') }}" class="btn btn-warning">
-                <i class="fa fa-file-excel"></i>
+                <i class="fa fa-file-pdf"></i>
                 Export Barang (.pdf)
             </a>
-            <button onclick="modalAction('{{ url('/barang/create_ajax') }}')" class="btn btn-success">Tambah Data (Ajax)</button>
+            <button onclick="modalAction(`{{ url('/barang/create_ajax') }}`)" class="btn btn-success">Tambah Data (Ajax)</button>
         </div>
     </div>
 
@@ -49,7 +49,7 @@
         @endif
 
         {{-- Tabel --}}
-        <table class="table table-bordered table-sm table-striped table-hover" id="table-barang">
+        <table class="table table-bordered table-sm table-striped table-hover" id="table-barang" width="100%">
             <thead>
                 <tr>
                     <th>No</th>
@@ -110,14 +110,14 @@
                 {
                     data: "barang_nama",
                     className: "",
-                    width: "37%",
+                    width: "20%",
                     orderable: true,
                     searchable: true,
                 },
                 {
                     data: "harga_beli",
                     className: "",
-                    width: "10%",
+                    width: "15%",
                     orderable: true,
                     searchable: false,
                     render: function(data, type, row) {
@@ -127,7 +127,7 @@
                 {
                     data: "harga_jual",
                     className: "",
-                    width: "10%",
+                    width: "15%",
                     orderable: true,
                     searchable: false,
                     render: function(data, type, row) {
@@ -137,14 +137,14 @@
                 {
                     data: "kategori.kategori_nama",
                     className: "",
-                    width: "14%",
+                    width: "20%",
                     orderable: true,
                     searchable: false
                 },
                 {
                     data: "aksi",
                     className: "text-center",
-                    width: "14%",
+                    width: "20%",
                     orderable: false,
                     searchable: false
                 }
@@ -158,7 +158,7 @@
         });
 
         $('.filter_kategori').change(function() {
-            tableBarang.draw();
+            tableBarang.ajax.reload();
         });
     });
 </script>

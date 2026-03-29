@@ -11,7 +11,7 @@
                 Export Stok (.xlsx)
             </a>
             <a href="{{ url('/stok/export_pdf') }}" class="btn btn-warning">
-                <i class="fa fa-file-excel"></i>
+                <i class="fa fa-file-pdf"></i>
                 Export Stok (.pdf)
             </a>
         <button onclick="modalAction(`{{ url('/stok/create_ajax') }}`)" class="btn btn-success">Tambah Stok</button>
@@ -46,7 +46,7 @@
             <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
 
-        <table class="table table-bordered table-sm table-striped table-hover" id="table-stok">
+        <table class="table table-bordered table-sm table-striped table-hover" id="table-stok" width="100%">
             <thead>
                 <tr>
                     <th>No</th>
@@ -95,7 +95,7 @@
                 },
                 { 
                     data: 'barang_id',
-                    className: '',
+                    className: 'text-center',
                     width: '15%',
                     orderable: true,
                     searchable: true
@@ -139,7 +139,7 @@
         });
 
         $('.filter_stok').change(function() {
-            tableStok.draw();
+            tableStok.ajax.reload();
         });
     });
 </script>

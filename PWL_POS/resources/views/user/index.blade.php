@@ -5,16 +5,16 @@
         <div class="card-header">
             <h3 class="card-title">Daftar User</h3>
         <div class="card-tools">
-            <button onclick="modalAction('{{ url('/user/import') }}')" class="btn btn-info">Import User</button>
+            <button onclick="modalAction(`{{ url('/user/import') }}`)" class="btn btn-info">Import User</button>
             <a href="{{ url('/user/export_excel') }}" class="btn btn-primary">
                 <i class="fa fa-file-excel"></i>
                 Export User (.xlsx)
             </a>
             <a href="{{ url('/user/export_pdf') }}" class="btn btn-warning">
-                <i class="fa fa-file-excel"></i>
+                <i class="fa fa-file-pdf"></i>
                 Export User (.pdf)
             </a>
-            <button onclick="modalAction('{{ url('/user/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah Ajax</button>
+            <button onclick="modalAction(`{{ url('/user/create_ajax') }}`)" class="btn btn-success">Tambah Ajax</button>
         </div>
     </div>
     <div class="card-body">
@@ -47,7 +47,7 @@
             <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
 
-        <table class="table table-bordered table-striped table-hover table-sm" id="table_user">
+        <table class="table table-bordered table-striped table-hover table-sm" id="table_user" width="100%",>
             <thead>
                 <tr>
                     <th>ID</th>
@@ -119,7 +119,7 @@
             searchable: false
             },{
             data: "aksi",
-            className: "",
+            className: "text-center",
             orderable: false,
             searchable: false
             }

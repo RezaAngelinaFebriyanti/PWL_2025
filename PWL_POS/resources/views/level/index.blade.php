@@ -5,16 +5,16 @@
         <div class="card-header">
             <h3 class="card-title">Daftar Level</h3>
             <div class="card-tools">
-                <button onclick="modalAction('{{ url('/level/import') }}')" class="btn btn-info">Import</button>
+                <button onclick="modalAction(`{{ url('/level/import') }}`)" class="btn btn-info">Import</button>
                 <a href="{{ url('/level/export_excel') }}" class="btn btn-primary">
                     <i class="fa fa-file-excel"></i>
                     Export Level (.xlsx)
                 </a>
                 <a href="{{ url('/level/export_pdf') }}" class="btn btn-warning">
-                    <i class="fa fa-file-excel"></i>
+                    <i class="fa fa-file-pdf"></i>
                     Export Level (.pdf)
                 </a>
-                <button onclick="modalAction('{{ url('/level/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah Ajax</button>
+                <button onclick="modalAction(`{{ url('/level/create_ajax') }}`)" class="btn btn-success">Tambah Ajax</button>
             </div>
         </div>
         <div class="card-body">
@@ -44,13 +44,13 @@
                 <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
 
-            <table class="table table-bordered table-striped table-hover table-sm" id="table_level">
+            <table class="table table-bordered table-striped table-hover table-sm" id="table_level" width="100%">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Level Kode</th>
                         <th>Level Nama</th>
-                        <th>aksi</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -105,7 +105,7 @@
                 },
                 {
                     data: "aksi",
-                    className: "",
+                    className: "text-center",
                     orderable: false,
                     searchable: false
                 }

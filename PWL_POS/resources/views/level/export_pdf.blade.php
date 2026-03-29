@@ -78,6 +78,9 @@
                     Laman: www.polinema.ac.id
                 </span>
             </td>
+            <td width="15%" class="text-center">
+                <img src="{{ public_path('jti-logo.png') }}" class="image">
+            </td>
         </tr>
     </table>
 
