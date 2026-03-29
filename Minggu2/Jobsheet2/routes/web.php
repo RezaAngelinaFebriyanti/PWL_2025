@@ -141,3 +141,8 @@ Route::resource('photos', PhotoController::class)->except([ 'create', 'store', '
 Route::get('/greeting', function() {
     return view('hello', ['name' => 'Reza Angelina']);
 });
+
+// VIEW Dalam Direktori
+Route::get('/greeting', function() {
+    return view('blog.hello', ['name' => 'Reza Angelina']);
+});
