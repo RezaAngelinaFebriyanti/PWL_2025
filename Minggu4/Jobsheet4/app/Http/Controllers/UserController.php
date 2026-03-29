@@ -12,13 +12,13 @@ class UserController extends Controller
     public function index()
     {
         /*
+        //FILLABLE
         $data = [
             'level_id' => 2,
             'username' => 'manager_dua',
             'nama' => 'Manager 2',
             'password' => Hash::make('12345')
         ];
-        */
 
         $data = [
             'level_id' => 2,
@@ -29,6 +29,10 @@ class UserController extends Controller
         UserModel::create($data);
 
         $user = UserModel::all();
+        */
+
+        //RETRIEVING SINGLE MODELS
+        $user = UserModel::find(1);
         return view('user', ['data' => $user]);
     }
 }
