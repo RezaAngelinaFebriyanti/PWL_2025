@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController; ///Mengimpor class HomeController
 use App\Http\Controllers\AboutController; //Mengimpor class AboutController
 use App\Http\Controllers\ArticleController; //Mengimpor class ArticleController
 use App\Http\Controllers\PhotoController; //Mengimpor class PhotoController
+use App\resource\views\helloblade; //Mengimpor class hello.blade
 
 //BASIC ROUTING
 /*
@@ -129,7 +130,14 @@ Route::get('/article/{id}', [ArticleController::class,'article']);
 */
 
 // RESOURCE CONTROLLER
+/*
 Route::resource('photos', PhotoController::class);
 //Route untuk menjalankan fungsi pada file PhotoController
 Route::resource('photos', PhotoController::class)->only([ 'index', 'show']);
 Route::resource('photos', PhotoController::class)->except([ 'create', 'store', 'update', 'destroy']);
+*/
+
+// VIEW
+Route::get('/greeting', function() {
+    return view('hello', ['name' => 'Reza Angelina']);
+});
