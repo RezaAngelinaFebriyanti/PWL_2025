@@ -146,3 +146,6 @@ Route::get('/greeting', function() {
 Route::get('/greeting', function() {
     return view('blog.hello', ['name' => 'Reza Angelina']);
 });
+
+// Menampilkan view dari controller
+Route::get('/greeting', [WelcomeController::class, 'greeting']);
