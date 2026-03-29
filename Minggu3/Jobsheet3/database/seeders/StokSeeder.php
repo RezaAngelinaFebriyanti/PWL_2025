@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\Hash;
 
 class StokSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $data = [
