@@ -31,8 +31,15 @@ class UserController extends Controller
         $user = UserModel::all();
         */
 
+        /*
         //RETRIEVING SINGLE MODELS
         $user = UserModel::find(1);
-        return view('user', ['data' => $user]);
+        return view('user', ['data' => $user]); //mencari user_id = 1
+
+        $user = UserModel::where('level_id', 1)->first();
+        $user = UserModel::firstWhere('level_id', 1); //mencari level_id = 1
+        */
+
+
     }
 }
