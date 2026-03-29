@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        /*
+        // Tambah data user dengan Eloquent Model
         $data = [
             'username' => 'customer-1',
             'nama' => 'Pelanggan',
@@ -18,15 +18,14 @@ class UserController extends Controller
             'level_id' => 4
         ];
         UserModel::insert($data);
-        */
 
         $data = [
             'nama' => 'Pelanggan Pertama',
         ];
-        UserModel::where('username', 'customer-1')->update($data);
+        UserModel::where('username', 'customer-1')->update($data); // update tabel user
 
         // Akses model UserModel
-        $user = UserModel::all();
+        $user = UserModel::all(); //ambil semua data dari tabel m_user
         return view('user', ['data' => $user]);
     }
 }
