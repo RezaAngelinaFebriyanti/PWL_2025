@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('m_barang', function (Blueprint $table) {
@@ -23,10 +20,7 @@ return new class extends Migration
             $table->foreign('kategori_id')->references('kategori_id')->on('m_kategori');
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
+    
     public function down(): void
     {
         Schema::table('m_barang', function (Blueprint $table) {
