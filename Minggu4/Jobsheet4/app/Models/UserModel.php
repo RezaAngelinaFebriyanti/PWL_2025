@@ -14,7 +14,6 @@ class UserModel extends Model
     protected $primaryKey = 'user_id'; //mendefiniskan pk dari tabel yg digunakan
 
     protected $fillable = ['level_id', 'username', 'nama', 'password'];
-    //protected $fillable = ['level_id', 'username', 'nama'];
 
     public function level(): BelongsTo
     {
