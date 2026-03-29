@@ -36,10 +36,15 @@ class UserController extends Controller
         $user = UserModel::find(1);
         return view('user', ['data' => $user]); //mencari user_id = 1
 
-        $user = UserModel::where('level_id', 1)->first();
-        $user = UserModel::firstWhere('level_id', 1); //mencari level_id = 1
+        $user = UserModel::where('level_id', 1)->first(); //mencari level_id = 1
+        $user = UserModel::firstWhere('level_id', 1); //shortcut kode program diatasnya
         */
 
+        //findOr
+        $user = UserModel::findOr(1, ['username', 'nama'], function() {
+            abort(404);
+        });
 
+        return view('user', ['data' => $user]);
     }
 }
