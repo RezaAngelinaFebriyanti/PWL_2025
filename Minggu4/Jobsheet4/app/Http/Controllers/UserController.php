@@ -167,6 +167,10 @@ class UserController extends Controller
         $user = UserModel::all();
         return view('user', ['data' => $user]);
         */
+
+        //belongsTo
+        $user = UserModel::with('level')->get();
+        dd($user);
     }
 
     //CRUD ~ Create
