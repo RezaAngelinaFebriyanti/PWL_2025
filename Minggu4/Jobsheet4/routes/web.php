@@ -17,4 +17,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/user/tambah', [UserController::class, 'tambah']); //Create
-Route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan']); //Create
+Route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan']); //Create 
