@@ -134,5 +134,25 @@ class UserController extends Controller
         $user->isDirty(); //false
         $user->isClean(); //true
         dd($user->isDirty());
+
+        //wasChanged
+        //untuk mengecek perubahan apakah benar-benar tersimpan
+        $user = UserModel::create (
+            [
+                'username' => 'manager11',
+                'nama' => 'Manager11',
+                'password' => Hash::make('12345'),
+                'level_id' => 2,
+            ]
+        );
+        $user->username = 'manager12';
+
+        $user->save();
+
+        $user->wasChanged();
+        $user->wasChanged('username');
+        $user->wasChanged(['username', 'level_id']); //true
+        $user->wasChanged('nama');
+        dd($user->wasChanged(['nama', 'username'])); //true
     }
 }
