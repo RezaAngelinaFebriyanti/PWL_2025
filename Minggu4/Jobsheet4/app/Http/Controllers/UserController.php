@@ -63,9 +63,33 @@ class UserController extends Controller
         $user = UserModel::where('username', 'manager9')->firstOrFail();
         */
 
+        /*
         // RETREIVING AGGREGRATES
         $user = UserModel::where('level_id', 2)->count();
         dd($user);
+        */
+
+        /*
+        // firstOrCreate
+        $user = UserModel::firstOrCreate(
+            [
+                'username' => 'manager',
+                'nama' => 'Manager',
+            ],
+        );
+        */
+
+        // firstOrCreate
+        // Digunakan untuk mencari username = manager22. Jika tidak ditemukan maka data tersebut akan diinsert ke tabel
+        $user = UserModel::firstOrCreate(
+            [
+                'username' => 'manager22',
+                'nama' => 'Manager Dua Dua',
+                'password' => Hash::make('12345'),
+                'level_id' => 2
+            ],
+        );
+
         return view('user', ['data' => $user]);
     }
 }
