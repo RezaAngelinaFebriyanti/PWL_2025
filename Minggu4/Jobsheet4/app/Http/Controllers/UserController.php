@@ -81,10 +81,23 @@ class UserController extends Controller
 
         // firstOrCreate
         // Digunakan untuk mencari username = manager22. Jika tidak ditemukan maka data tersebut akan diinsert ke tabel
+        /*
         $user = UserModel::firstOrCreate(
             [
                 'username' => 'manager22',
                 'nama' => 'Manager Dua Dua',
+                'password' => Hash::make('12345'),
+                'level_id' => 2
+            ],
+        );
+        */
+
+        //firstOrNew
+        //Method untuk mencari sesuatu. Bila Tidak ditemukan akan dibuat objek baru tanpa disimpan didatabase
+        $user = UserModel::firstOrNew (
+            [
+                'username' => 'manager23',
+                'nama' => 'Manager Tiga Tiga',
                 'password' => Hash::make('12345'),
                 'level_id' => 2
             ],
