@@ -94,6 +94,7 @@ class UserController extends Controller
 
         //firstOrNew
         //Method untuk mencari sesuatu. Bila Tidak ditemukan akan dibuat objek baru tanpa disimpan didatabase
+        /*
         $user = UserModel::firstOrNew (
             [
                 'username' => 'manager23',
@@ -104,11 +105,13 @@ class UserController extends Controller
         );
 
         return view('user', ['data' => $user]);
+        */
 
         //isDirty, isClean
         //Digunakan untuk mengecek perubahan
         //isDirty = tidak terjadi perubahan
         //isClean = terjadi perubahan
+        /*
         $user = UserModel::create (
             [
                 'username' => 'manager55',
@@ -134,9 +137,11 @@ class UserController extends Controller
         $user->isDirty(); //false
         $user->isClean(); //true
         dd($user->isDirty());
+        */
 
         //wasChanged
         //untuk mengecek perubahan apakah benar-benar tersimpan
+        /*
         $user = UserModel::create (
             [
                 'username' => 'manager11',
@@ -154,9 +159,18 @@ class UserController extends Controller
         $user->wasChanged(['username', 'level_id']); //true
         $user->wasChanged('nama');
         dd($user->wasChanged(['nama', 'username'])); //true
-
+        
+        */
+        
         //CRUD ~ Read
+        /*
         $user = UserModel::all();
         return view('user', ['data' => $user]);
+        */
+    }
+
+    //CRUD ~ Create
+    public function tambah() {
+        return view('user_tambah');
     }
 }
