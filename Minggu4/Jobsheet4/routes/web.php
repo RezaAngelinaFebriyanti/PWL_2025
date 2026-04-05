@@ -20,3 +20,4 @@ Route::get('/user/tambah', [UserController::class, 'tambah']); //Create
 Route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan']); //Create
 Route::get('/user/ubah/{id}', [UserController::class, 'ubah']); //Update
 Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan']); //Update
+Route::get('/user/hapus/{id}', [UserController::class, 'hapus']); //Delete
